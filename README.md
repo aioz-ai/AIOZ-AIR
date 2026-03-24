@@ -1,3 +1,1 @@
-This is the repo of the landing page of the paper AffordMatcher: Affordance Learning in 3D Scenes from Visual Signifiers
-
-🌟 Stay tuned for more information and join us at CVPR 2026.
+This is the repo of the introduction page of the AIOZ Research team. Visit us at: https://aioz-ai.github.io/AIOZ-AIR/
