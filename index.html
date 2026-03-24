@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIOZ Network — Peer-Reviewed AI Research Publications (2019–2024)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap');
+        :root {
+            --primary: #00ff9d;
+            --bg: #0f0f0f;
+            --card: #1a1a1a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* ==================== HEADER ==================== */
+		.highlight-row {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 20px;
+		}
+
+		.highlight-running {
+			overflow: hidden;
+			white-space: nowrap;
+			max-width: 400px;
+			position: relative;
+		}
+
+		.highlight-running span {
+			display: inline-block;
+			padding-left: 100%;
+			animation: marquee 10s linear infinite;
+			color: #bbb;
+			font-size: 1.4rem;
+		}
+
+		@keyframes marquee {
+			0% { transform: translateX(0); }
+			100% { transform: translateX(-100%); }
+		}
+		.highlight-bg-text {
+			transition: opacity 0.4s ease;
+		}
+		.highlight-text-wrapper {
+			position: relative;
+			display: inline-block;
+		}
+
+		/* BIG faint background text */
+		.highlight-bg-text {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 5rem;
+			font-weight: 700;
+			color: rgba(0, 255, 157, 0.06); /* very subtle */
+			white-space: nowrap;
+			pointer-events: none;
+			user-select: none;
+			letter-spacing: 4px;
+		}
+
+		/* keep main text readable */
+		.highlight-text {
+			position: relative;
+			z-index: 1;
+			font-size: 1.35rem;
+			color: #bbb;
+		}
+		.conference {
+			display: inline-block;
+			background: rgba(0, 255, 157, 0.1);
+			color: var(--primary);
+			padding: 5px 14px;
+			border-radius: 30px;
+			font-size: 0.85rem;
+			font-weight: 500;
+			margin-bottom: 1.2rem;
+			position: relative;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+
+		.conference:hover {
+			transform: translateY(-4px) scale(1.05);
+			box-shadow: 0 0 15px rgba(0, 255, 157, 0.5), 0 0 30px rgba(0, 255, 157, 0.2) inset;
+			background: rgba(0, 255, 157, 0.15);
+			color: #ffffff;
+		}
+
+		.conference::after {
+			content: '';
+			position: absolute;
+			top: -6px; left: -6px; right: -6px; bottom: -6px;
+			border-radius: 36px;
+			background: linear-gradient(120deg, rgba(0,255,157,0.3), rgba(0,255,157,0) 70%);
+			opacity: 0;
+			transition: opacity 0.4s ease;
+			pointer-events: none;
+		}
+
+		.conference:hover::after {
+			opacity: 1;
+			animation: glowPulse 1.8s infinite;
+		}
+
+		@keyframes glowPulse {
+			0%, 100% { transform: scale(1); opacity: 0.3; }
+			50% { transform: scale(1.05); opacity: 0.6; }
+		}
+		.hero-subtitle {
+			font-size: 1.25rem;
+			color: #ccc;
+			max-width: 700px;
+			margin: 0 auto;
+			min-height: 1.5em;
+		}
+
+		/* blinking cursor */
+		.cursor {
+			display: inline-block;
+			margin-left: 4px;
+			color: var(--primary);
+			animation: blink 1s infinite;
+		}
+
+		@keyframes blink {
+			0%, 50%, 100% { opacity: 1; }
+			25%, 75% { opacity: 0; }
+		}
+			font-size: 1.25rem;
+			color: #ccc;
+			max-width: 700px;
+			margin: 0 auto;
+			min-height: 1.5em;
+		}
+
+		/* blinking cursor */
+		.cursor {
+			display: inline-block;
+			margin-left: 4px;
+			color: var(--primary);
+			animation: blink 1s infinite;
+		}
+
+		@keyframes blink {
+			0%, 50%, 100% { opacity: 1; }
+			25%, 75% { opacity: 0; }
+		}
+        header {
+            position: relative;
+            height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(15,15,15,0.0), rgba(15,15,15,0.55)),
+                        url('static/figures/WallPaper.jpg') center/cover no-repeat;
+            z-index: 1;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(transparent, rgba(0, 255, 157, 0.08));
+            z-index: 2;
+        }
+        .header-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.2rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, #00ff9d, #00ffbb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 40px rgba(0, 255, 157, 0.6);
+        }
+        h1 {
+            font-size: 3.1rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        .subtitle {
+            font-size: 1.35rem;
+            color: #ddd;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .highlight-box {
+			position: relative;
+			background: radial-gradient(circle at top, rgba(0,255,157,0.08), transparent 70%), var(--card);
+			border: 1px solid rgba(0,255,157,0.15);
+			border-radius: 24px;
+			padding: 3.5rem 2rem;
+			text-align: center;
+			margin-bottom: 4rem;
+			box-shadow: 
+				0 0 60px rgba(0, 255, 157, 0.08),
+				inset 0 0 30px rgba(0,255,157,0.05);
+			overflow: hidden;
+		}
+
+		/* animated glow border */
+		.highlight-box::before {
+			content: '';
+			position: absolute;
+			inset: -2px;
+			border-radius: 24px;
+			background: linear-gradient(120deg, transparent, rgba(0,255,157,0.6), transparent);
+			opacity: 0.15;
+			filter: blur(12px);
+			animation: glowMove 6s linear infinite;
+		}
+
+		@keyframes glowMove {
+			0% { transform: translateX(-50%); }
+			100% { transform: translateX(50%); }
+		}
+
+		.highlight-number {
+			font-size: 6.5rem;
+			font-weight: 700;
+			background: linear-gradient(180deg, #00ff9d, #00ffcc);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			text-shadow: 0 0 30px rgba(0,255,157,0.7);
+			animation: float 3s ease-in-out infinite;
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-8px); }
+		}
+
+		.highlight-text {
+			font-size: 1.35rem;
+			color: #bbb;
+			margin-top: 0.5rem;
+			letter-spacing: 0.3px;
+		}
+
+		.highlight-badge {
+			display: inline-block;
+			margin-bottom: 1rem;
+			padding: 6px 16px;
+			border-radius: 999px;
+			background: rgba(0,255,157,0.1);
+			color: var(--primary);
+			font-size: 0.8rem;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+		}
+        .highlight-number {
+            font-size: 7rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-text {
+            font-size: 1.5rem;
+            color: #ccc;
+        }
+        h2 {
+            font-size: 2.2rem;
+            margin: 3rem 0 2rem;
+            color: white;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .papers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 2.5rem;
+        }
+        .paper-card {
+            background: var(--card);
+            border: 1px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .paper-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--primary);
+            box-shadow: 0 25px 50px rgba(0, 255, 157, 0.22);
+        }
+        .media-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: #222222;
+            overflow: hidden;
+        }
+        .media-container img,
+        .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .paper-content {
+            padding: 1.8rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .paper-year { color: var(--primary); font-weight: 600; margin-bottom: 0.6rem; }
+        .paper-title { font-size: 1.35rem; font-weight: 600; line-height: 1.35; margin-bottom: 1rem; color: white; }
+        .conference {
+            display: inline-block;
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--primary);
+            padding: 5px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Holographic Links */
+        .paper-links {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .paper-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .paper-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 255, 157, 0.15) 50%, 
+                transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .paper-link:hover::before {
+            opacity: 1;
+        }
+        .paper-link:hover {
+            transform: translateX(6px);
+            text-shadow: 0 0 15px rgba(0, 255, 157, 0.8);
+        }
+        .paper-link span {
+            font-size: 1.15rem;
+            filter: drop-shadow(0 0 8px currentColor);
+            transition: all 0.3s ease;
+        }
+        .paper-link:hover span {
+            filter: drop-shadow(0 0 18px currentColor) brightness(1.3);
+            transform: scale(1.15);
+        }
+
+        footer {
+            background: var(--bg);
+            border-top: 1px solid #222;
+            padding: 3rem 0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <div class="logo-sub">Welcome to</div>
+        <div class="logo">AIOZ Research</div>
+
+        <h1 class="hero-title">
+            Innovation is the heartbeat
+        </h1>
+
+        <p class="hero-subtitle">
+            <span id="typing-text"></span><span class="cursor">|</span>
+        </p>
+    </div>
+</header>
+
+    <div class="container">
+        <div class="highlight-box">
+			<div class="highlight-badge">Research Output</div>
+			<div class="highlight-row">
+				<div class="highlight-number" id="paper-count">0</div>
+				<div class="highlight-running">
+					<span id="running-text"></span>
+				</div>
+			</div>
+
+			<div class="highlight-text-wrapper">
+				<div class="highlight-bg-text">CVPR</div>
+
+			</div>
+		</div>
+        <h2>Featured Publications</h2>
+        <div class="papers-grid" id="papers-grid"></div>
+    </div>
+
+    <footer>
+        <p>Visual tribute to the AIOZ Network AI Research team • Data from
+            <a href="https://aioz.network/" style="color:#00ff9d;" target="_blank">aioz.network</a>
+        </p>
+        <p style="margin-top:1rem;">Made with ❤️ for the decentralized AI community</p>
+    </footer>
+
+    <script>
+        const papers = [
+		{
+			year: "2026",
+			title: "AffordMatcher: Affordance Learning in 3D Scenes from Visual Signifiers",
+			conference: "CVPR 2026",
+			conferenceLink: "https://cvpr.thecvf.com/", 
+			mediaType: "video",
+			mediaUrl: "static/figures/AffordMatcher.mp4",
+			paperLink: "#",
+			codeLink: "https://github.com/aioz-ai/AffordMatcher"
+		  },
+		{
+			year: "2026",
+			title: "AeroScene: Progressive Scene Synthesis for Aerial Robotics",
+			conference: "ICRA 2026",
+			conferenceLink: "https://2026.ieee-icra.org/", 
+			mediaType: "video",
+			mediaUrl: "static/figures/AeroScene.mp4",
+			paperLink: "#",
+			codeLink: "https://github.com/aioz-ai/AeroScene"
+		  },
+		  {
+			year: "2025",
+			title: "SplineFormer: An Explainable Transformer Network for Autonomous Endovascular Navigation",
+			conference: "IROS 2025",
+			conferenceLink: "https://www.ieee-iros.org/",
+			mediaType: "gif",
+			mediaUrl: "static/figures/Spline.gif",
+			paperLink: "https://arxiv.org/abs/2501.04515",
+			codeLink: "#"
+		  },
+		  {
+			year: "2025",
+			title: "Lightweight Temporal Transformer Decomposition for Federated Autonomous Driving",
+			conference: "IROS 2025",
+			conferenceLink: "https://www.ieee-iros.org/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/LTFed.gif",
+			paperLink: "https://arxiv.org/abs/2506.23523",
+			codeLink: "https://github.com/aioz-ai/LTFed"
+		  },
+		  {
+			year: "2025",
+			title: "FedEFM: Federated Endovascular Foundation Model with Unseen Data",
+			conference: "ICRA 2025",
+			conferenceLink: "https://www.ieee-icra.org/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/FedEFM.gif",
+			paperLink: "https://arxiv.org/abs/2501.16992",
+			codeLink: "https://github.com/aioz-ai/FedEFM"
+		  },
+		  {
+			year: "2024",
+			title: "Guide3D: A Bi-planar X-ray Dataset for 3D Shape Reconstruction",
+			conference: "ACCV 2024",
+			conferenceLink: "https://accv2024.org/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/Guide3D.gif",
+			paperLink: "https://arxiv.org/abs/2410.22224",
+			codeLink: "https://github.com/airvlab/guide3d"
+		  },
+		  {
+			year: "2024",
+			title: "Scalable Group Choreography via Variational Phase Manifold Learning",
+			conference: "ECCV 2024",
+			conferenceLink: "https://eccv2024.ecva.net/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/Manifold.gif",
+			paperLink: "https://arxiv.org/pdf/2407.18839",
+			codeLink: "https://github.com/aioz-ai/VAE"
+		  },
+		  {
+			year: "2024",
+			title: "Fine-grained Visual Classification using Self Assessment Classifier",
+			conference: "CAI 2024",
+			conferenceLink: "https://www.caiconference.org/", 
+			mediaType: "image",
+			mediaUrl: "static/figures/SAC.jpg",
+			paperLink: "https://arxiv.org/pdf/2205.10529",
+			codeLink: "https://github.com/aioz-ai/SAC"
+		  },
+		  {
+			year: "2024",
+			title: "Reducing Non-IID Effects in Federated Autonomous Driving with Contrastive Divergence Loss",
+			conference: "ICRA 2024",
+			conferenceLink: "https://www.ieee-icra.org/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/CDL.gif",
+			paperLink: "https://livrepository.liverpool.ac.uk/3188799/1/2303.06305v2.pdf",
+			codeLink: "https://github.com/aioz-ai/CDL"
+		  },
+		  {
+			year: "2024",
+			title: "Style Transfer for 2D Talking Head Generation",
+			conference: "CVPR 2024",
+			conferenceLink: "https://cvpr2024.thecvf.com/", 
+			mediaType: "video",
+			mediaUrl: "static/figures/Talking.mp4",
+			paperLink: "https://arxiv.org/pdf/2303.09799",
+			codeLink: "#"
+		  },
+		  {
+			year: "2023",
+			title: "Controllable Group Choreography using Contrastive Diffusion",
+			conference: "ACM TOG 2023",
+			conferenceLink: "https://tog.acm.org/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/GCD.gif",
+			paperLink: "https://dl.acm.org/doi/10.1145/3618356",
+			codeLink: "https://github.com/aioz-ai/GCD"
+		  },
+		  {
+			year: "2023",
+			title: "Reducing Training Time in Cross-silo Federated Learning using Multigraph Topology",
+			conference: "ICCV 2023",
+			conferenceLink: "https://iccv2023.thecvf.com/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/P2P.gif",
+			paperLink: "https://arxiv.org/pdf/2207.09657",
+			codeLink: "https://github.com/aioz-ai/MultigraphFL"
+		  },
+		  {
+			year: "2023",
+			title: "Music-driven Group Choreography",
+			conference: "CVPR 2023",
+			conferenceLink: "https://cvpr2023.thecvf.com/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/GDance.gif",
+			paperLink: "https://arxiv.org/pdf/2303.12337",
+			codeLink: "https://github.com/aioz-ai/AIOZ-GDANCE"
+		  },
+		  {
+			year: "2022",
+			title: "Deep Federated Learning for Autonomous Driving",
+			conference: "IV 2022",
+			conferenceLink: "https://2022.ieee-iv.org/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/FADNet.gif",
+			paperLink: "https://arxiv.org/pdf/2110.05754",
+			codeLink: "https://github.com/aioz-ai/FADNet"
+		  },
+		  {
+			year: "2022",
+			title: "Light-weight Deformable Registration using Adversarial Learning with Distilling Knowledge",
+			conference: "IEEE TMI 2022",
+			conferenceLink: "https://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=42", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/Regis.gif",
+			paperLink: "https://arxiv.org/pdf/2110.01293",
+			codeLink: "https://github.com/aioz-ai/LDR_ALDK"
+		  },
+		  {
+			year: "2022",
+			title: "Coarse-to-fine Reasoning for Visual Question Answering",
+			conference: "CVPR 2022",
+			conferenceLink: "https://cvpr2022.thecvf.com/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/vqa1.gif",
+			paperLink: "https://arxiv.org/pdf/2110.02526",
+			codeLink: "https://github.com/aioz-ai/CFR_VQA"
+		  },
+		  {
+			year: "2021",
+			title: "Multiple Meta-model Quantifying for Medical Visual Question Answering",
+			conference: "MICCAI 2021",
+			conferenceLink: "https://miccai.org/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/MedVQA2.gif",
+			paperLink: "https://arxiv.org/pdf/2105.08913",
+			codeLink: "https://github.com/aioz-ai/MICCAI21_MMQ"
+		  },
+		  {
+			year: "2021",
+			title: "Graph-based Person Signature for Person Re-identification",
+			conference: "CVPR 2021",
+			conferenceLink: "https://cvpr2021.thecvf.com/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/ReID.gif",
+			paperLink: "https://arxiv.org/pdf/2104.06770",
+			codeLink: "https://github.com/aioz-ai/CVPRW21_GPS"
+		  },
+		  {
+			year: "2020",
+			title: "Multiple Interaction Learning with Question-type Prior Knowledge",
+			conference: "ECCV 2020",
+			conferenceLink: "https://eccv2020.eu/", 
+			mediaType: "image",
+			mediaUrl: "static/figures/MILQT.png",
+			paperLink: "https://arxiv.org/pdf/2009.11118",
+			codeLink: "https://github.com/aioz-ai/ECCVW20_MILQT"
+		  },
+		  {
+			year: "2019",
+			title: "Overcoming Data Limitation in Medical Visual Question Answering",
+			conference: "MICCAI 2019",
+			conferenceLink: "https://miccai.org/", 
+			mediaType: "image",
+			mediaUrl: "static/figures/Medical_VQA_Framework.jpg",
+			paperLink: "https://arxiv.org/pdf/2105.08913",
+			codeLink: "https://github.com/aioz-ai/MICCAI19-MedVQA"
+		  },
+		  {
+			year: "2019",
+			title: "Compact Trilinear Interaction for Visual Question Answering",
+			conference: "ICCV 2019",
+			conferenceLink: "https://iccv2019.thecvf.com/", 
+			mediaType: "gif",
+			mediaUrl: "static/figures/VQA3.gif",
+			paperLink: "https://arxiv.org/pdf/1909.11874",
+			codeLink: "https://github.com/aioz-ai/ICCV19_VQA-CTI"
+		  }
+		];
+		
+		
+        function renderPapers() {
+            const grid = document.getElementById('papers-grid');
+            grid.innerHTML = '';
+
+            papers.forEach(paper => {
+                const mediaHTML = paper.mediaType === 'video' 
+                    ? `<div class="media-container"><video src="${paper.mediaUrl}" muted loop autoplay playsinline></video></div>`
+                    : `<div class="media-container"><img src="${paper.mediaUrl}" alt="${paper.title}"></div>`;
+
+                grid.innerHTML += `
+                    <div class="paper-card">
+                        ${mediaHTML}
+                        <div class="paper-content">
+                            <div class="paper-year">${paper.year}</div>
+                            <div class="paper-title">${paper.title}</div>
+                            <div class="conference">
+							  <a href="${paper.conferenceLink}" target="_blank" style="color: var(--primary); text-decoration: none;">
+								${paper.conference}
+							  </a>
+							</div>
+                            
+                            <div class="paper-links">
+                                <a href="${paper.paperLink}" class="paper-link" target="_blank">
+                                    <span>🗐</span> View Full Paper
+                                </a>
+                                <a href="${paper.codeLink}" class="paper-link" target="_blank">
+                                    <span>🖳</span> Source Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('paper-count').textContent = papers.length;
+        }
+
+        function animateCounter(target, duration = 1200) {
+			let start = 0;
+			const el = document.getElementById('paper-count');
+			const stepTime = Math.max(20, Math.floor(duration / target));
+
+			const timer = setInterval(() => {
+				start++;
+				el.textContent = start;
+				if (start >= target) clearInterval(timer);
+			}, stepTime);
+		}
+		const text = "Driving us to constantly challenge the status quo and create solutions that shape the future.";
+		let index = 0;
+
+		function typeEffect() {
+			const el = document.getElementById("typing-text");
+
+			if (index < text.length) {
+				el.textContent += text.charAt(index);
+				index++;
+				setTimeout(typeEffect, 35); // typing speed
+			}
+		}
+		
+		const conferences = [...new Set(papers.map(p => p.conference))];
+		document.getElementById("running-text").textContent =
+			conferences.join(" • ") + " • ";
+		let confIndex = 0;
+
+		function rotateConference() {
+			const el = document.querySelector(".highlight-bg-text");
+			el.style.opacity = 0;
+
+			setTimeout(() => {
+				confIndex = (confIndex + 1) % conferences.length;
+				el.textContent = conferences[confIndex];
+				el.style.opacity = 1;
+			}, 300);
+		}
+		document.getElementById("running-text").textContent = 
+			" • Peer-reviewed AI publications accepted by prestigious conferences • ";	
+
+		setInterval(rotateConference, 2500);
+		
+		window.onload = () => {
+			renderPapers();
+			animateCounter(papers.length);
+			typeEffect();
+		};
+    </script>
+</body>
+</html>
