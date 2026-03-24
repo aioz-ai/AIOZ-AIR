@@ -629,7 +629,7 @@
         if (index < typingText.length) {
             el.textContent += typingText.charAt(index);
             index++;
-            setTimeout(typeEffect, 35);
+            setTimeout(typeEffect, 30);
         }
     }
 
@@ -647,8 +647,8 @@
 
     function startHighlightAnimation() {
         document.getElementById("running-text").textContent =
-            " • Peer-reviewed AI publications accepted by prestigious conferences • ";
-        setInterval(rotateConference, 2500);
+            " • Peer-reviewed AI publications accepted by prestigious conferences • Peer-reviewed AI publications accepted by prestigious conferences •";
+        setInterval(rotateConference, 3000);
     }
 
     document.getElementById('load-more-btn').addEventListener('click', (e) => {
