@@ -237,10 +237,53 @@
         }
         .paper-year { color: var(--primary); font-weight: 600; margin-bottom: 0.6rem; }
         .paper-title { font-size: 1.35rem; font-weight: 600; line-height: 1.35; margin-bottom: 1rem; color: white; }
-        .conference a {
-            color: var(--primary);
-            text-decoration: none;
-        }
+        .conference {
+			display: inline-block;
+			background: rgba(0, 255, 157, 0.1);
+			color: var(--primary);
+			padding: 6px 16px;
+			border-radius: 30px;
+			font-size: 0.85rem;
+			font-weight: 500;
+			margin-bottom: 1.2rem;
+			position: relative;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+
+		.conference a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		.conference:hover {
+			transform: translateY(-4px) scale(1.05);
+			box-shadow: 0 0 15px rgba(0, 255, 157, 0.5),
+						0 0 30px rgba(0, 255, 157, 0.2) inset;
+			background: rgba(0, 255, 157, 0.15);
+			color: #ffffff;
+		}
+
+		.conference::after {
+			content: '';
+			position: absolute;
+			top: -6px; left: -6px; right: -6px; bottom: -6px;
+			border-radius: 36px;
+			background: linear-gradient(120deg, rgba(0,255,157,0.3), rgba(0,255,157,0) 70%);
+			opacity: 0;
+			transition: opacity 0.4s ease;
+			pointer-events: none;
+		}
+
+		.conference:hover::after {
+			opacity: 1;
+			animation: glowPulse 1.8s infinite;
+		}
+
+		@keyframes glowPulse {
+			0%, 100% { transform: scale(1); opacity: 0.3; }
+			50% { transform: scale(1.05); opacity: 0.6; }
+		}
 
         /* Holographic Links */
         .paper-links {
@@ -586,35 +629,38 @@
     let visibleCount = 10;
     const step = 10;
 
-    function renderPapers() {
-        const grid = document.getElementById('papers-grid');
-        let html = '';
-        papers.slice(0, visibleCount).forEach(paper => {
-            const mediaHTML = paper.mediaType === 'video'
-                ? `<div class="media-container"><video src="${paper.mediaUrl}" muted loop autoplay playsinline></video></div>`
-                : `<div class="media-container"><img src="${paper.mediaUrl}" alt="${paper.title}"></div>`;
-            html += `
-                <div class="paper-card">
-                    ${mediaHTML}
-                    <div class="paper-content">
-                        <div class="paper-year">${paper.year}</div>
-                        <div class="paper-title">${paper.title}</div>
-                        <div class="conference">
-                            <a href="${paper.conferenceLink}" target="_blank">${paper.conference}</a>
-                        </div>
-                        <div class="paper-links">
-                            ${paper.paperLink ? `<a href="${paper.paperLink}" class="paper-link" target="_blank"><span>🗐</span> View Full Paper</a>` : ''}
-                            ${paper.codeLink ? `<a href="${paper.codeLink}" class="paper-link" target="_blank"><span>🖳</span> Source Code</a>` : ''}
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        grid.innerHTML = html;
+    function renderPapers(start = 0, end = visibleCount) {
+		const grid = document.getElementById('papers-grid');
 
-        const btn = document.getElementById('load-more-btn');
-        if (visibleCount >= papers.length) btn.style.display = 'none';
-    }
+		papers.slice(start, end).forEach(paper => {
+			const mediaHTML = paper.mediaType === 'video'
+				? `<div class="media-container"><video src="${paper.mediaUrl}" muted loop autoplay playsinline></video></div>`
+				: `<div class="media-container"><img src="${paper.mediaUrl}" alt="${paper.title}"></div>`;
+
+			const card = document.createElement('div');
+			card.className = 'paper-card';
+			card.innerHTML = `
+				${mediaHTML}
+				<div class="paper-content">
+					<div class="paper-year">${paper.year}</div>
+					<div class="paper-title">${paper.title}</div>
+					<div class="conference">
+						<a href="${paper.conferenceLink}" target="_blank">${paper.conference}</a>
+					</div>
+					<div class="paper-links">
+						${paper.paperLink ? `<a href="${paper.paperLink}" class="paper-link" target="_blank"><span>🗐</span> View Full Paper</a>` : ''}
+						${paper.codeLink ? `<a href="${paper.codeLink}" class="paper-link" target="_blank"><span>🖳</span> Source Code</a>` : ''}
+					</div>
+				</div>
+			`;
+
+			grid.appendChild(card);
+		});
+
+		if (visibleCount >= papers.length) {
+			document.getElementById('load-more-btn').style.display = 'none';
+		}
+	}
 
     function displayPaperCount(total) {
         const el = document.getElementById('paper-count');
@@ -646,22 +692,76 @@
     }
 
     function startHighlightAnimation() {
-        document.getElementById("running-text").textContent =
-            " • Peer-reviewed AI publications accepted by prestigious conferences • Peer-reviewed AI publications accepted by prestigious conferences •";
+        const baseText = "Peer-reviewed AI publications accepted by prestigious conferences";
+		const el = document.getElementById("running-text");
+		el.textContent = ` • ${baseText} • ${baseText} • ${baseText} • `;
         setInterval(rotateConference, 3000);
     }
 
+	function waitForMediaLoad(container, callback) {
+		const media = container.querySelectorAll('img, video');
+		let loaded = 0;
+		const total = media.length;
+
+		if (total === 0) return callback();
+
+		function check() {
+			loaded++;
+			if (loaded >= total) callback();
+		}
+
+		media.forEach(el => {
+			let done = false;
+
+			const onceCheck = () => {
+				if (!done) {
+					done = true;
+					check();
+				}
+			};
+
+			if (
+				(el.tagName === "IMG" && el.complete) ||
+				(el.tagName === "VIDEO" && el.readyState >= 3)
+			) {
+				onceCheck();
+			} else {
+				el.addEventListener('load', onceCheck, { once: true });
+				el.addEventListener('loadeddata', onceCheck, { once: true });
+				el.addEventListener('error', onceCheck, { once: true });
+			}
+		});
+	}
+
     document.getElementById('load-more-btn').addEventListener('click', (e) => {
-        const btn = e.target;
-        btn.textContent = "Loading...";
-        btn.disabled = true;
-        setTimeout(() => {
-            visibleCount += step;
-            renderPapers();
-            btn.textContent = "Load More";
-            btn.disabled = false;
-        }, 400);
-    });
+		const btn = e.target;
+
+		btn.textContent = "Loading...";
+		btn.disabled = true;
+		btn.style.opacity = "0.6";
+
+		const prevCount = visibleCount;
+		visibleCount += step;
+
+		renderPapers(prevCount, visibleCount);
+
+		const grid = document.getElementById('papers-grid');
+		const newCards = Array.from(grid.children).slice(prevCount);
+
+		waitForMediaLoad({ querySelectorAll: () => {
+			return newCards.flatMap(card => 
+				Array.from(card.querySelectorAll('img, video'))
+			);
+		}}, () => {
+			btn.textContent = "Load More";
+			btn.disabled = false;
+			btn.style.opacity = "1";
+
+			if (visibleCount >= papers.length) {
+				btn.style.display = 'none';
+			}
+		});
+	});
 
     window.onload = () => {
         renderPapers();
