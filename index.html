@@ -235,8 +235,9 @@
             display: flex;
             flex-direction: column;
         }
-        .paper-year { color: var(--primary); font-weight: 600; margin-bottom: 0.6rem; }
+        .paper-period { color: var(--primary); font-weight: 600; margin-bottom: 0.6rem; letter-spacing: 0.5px; font-size: 0.92rem; opacity: 0.9;}
         .paper-title { font-size: 1.35rem; font-weight: 600; line-height: 1.35; margin-bottom: 1rem; color: white; }
+		.paper-description {color: #bdbdbd; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.2rem;}
         .conference {
 			display: inline-block;
 			background: rgba(0, 255, 157, 0.1);
@@ -413,227 +414,249 @@
 </footer>
 
 <script>
-    const papers = [
-		{
-			year: "2026",
-			title: "AffordMatcher: Affordance Learning in 3D Scenes from Visual Signifiers",
-			conference: "CVPR 2026",
-			conferenceLink: "https://cvpr.thecvf.com/", 
-			mediaType: "video",
-			mediaUrl: "static/figures/AffordMatcher.mp4",
-			paperLink: "https://arxiv.org/abs/2603.27970",
-			codeLink: "https://github.com/aioz-ai/AffordMatcher"
-		  },
-		{
-			year: "2026",
-			title: "AeroScene: Progressive Scene Synthesis for Aerial Robotics",
-			conference: "ICRA 2026",
-			conferenceLink: "https://2026.ieee-icra.org/", 
-			mediaType: "video",
-			mediaUrl: "static/figures/AeroScene.mp4",
-			paperLink: "https://arxiv.org/abs/2603.23224",
-			codeLink: "https://github.com/aioz-ai/AeroScene"
-		  },
-		  {
-			year: "2025",
-			title: "SplineFormer: An Explainable Transformer Network for Autonomous Endovascular Navigation",
-			conference: "IROS 2025",
-			conferenceLink: "https://www.ieee-iros.org/",
-			mediaType: "gif",
-			mediaUrl: "static/figures/Spline.gif",
-			paperLink: "https://arxiv.org/abs/2501.04515",
-			codeLink: "#"
-		  },
-		  {
-			year: "2025",
-			title: "Lightweight Temporal Transformer Decomposition for Federated Autonomous Driving",
-			conference: "IROS 2025",
-			conferenceLink: "https://www.ieee-iros.org/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/LTFed.gif",
-			paperLink: "https://arxiv.org/abs/2506.23523",
-			codeLink: "https://github.com/aioz-ai/LTFed"
-		  },
-		  {
-			year: "2025",
-			title: "FedEFM: Federated Endovascular Foundation Model with Unseen Data",
-			conference: "ICRA 2025",
-			conferenceLink: "https://www.ieee-icra.org/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/FedEFM.gif",
-			paperLink: "https://arxiv.org/abs/2501.16992",
-			codeLink: "https://github.com/aioz-ai/FedEFM"
-		  },
-		  {
-			year: "2024",
-			title: "Guide3D: A Bi-planar X-ray Dataset for 3D Shape Reconstruction",
-			conference: "ACCV 2024",
-			conferenceLink: "https://accv2024.org/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/Guide3D.gif",
-			paperLink: "https://arxiv.org/abs/2410.22224",
-			codeLink: "https://github.com/airvlab/guide3d"
-		  },
-		  {
-			year: "2024",
-			title: "Scalable Group Choreography via Variational Phase Manifold Learning",
-			conference: "ECCV 2024",
-			conferenceLink: "https://eccv2024.ecva.net/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/Manifold.gif",
-			paperLink: "https://arxiv.org/pdf/2407.18839",
-			codeLink: "https://github.com/aioz-ai/VAE"
-		  },
-		  {
-			year: "2024",
-			title: "Fine-grained Visual Classification using Self Assessment Classifier",
-			conference: "CAI 2024",
-			conferenceLink: "https://www.caiconference.org/", 
-			mediaType: "image",
-			mediaUrl: "static/figures/SAC.jpg",
-			paperLink: "https://arxiv.org/pdf/2205.10529",
-			codeLink: "https://github.com/aioz-ai/SAC"
-		  },
-		  {
-			year: "2024",
-			title: "Reducing Non-IID Effects in Federated Autonomous Driving with Contrastive Divergence Loss",
-			conference: "ICRA 2024",
-			conferenceLink: "https://www.ieee-icra.org/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/CDL.gif",
-			paperLink: "https://livrepository.liverpool.ac.uk/3188799/1/2303.06305v2.pdf",
-			codeLink: "https://github.com/aioz-ai/CDL"
-		  },
-		  {
-			year: "2024",
-			title: "Style Transfer for 2D Talking Head Generation",
-			conference: "CVPR 2024",
-			conferenceLink: "https://cvpr2024.thecvf.com/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/Talking.gif",
-			paperLink: "https://arxiv.org/pdf/2303.09799",
-			codeLink: "#"
-		  },
-		  {
-			year: "2023",
-			title: "Controllable Group Choreography using Contrastive Diffusion",
-			conference: "ACM TOG 2023",
-			conferenceLink: "https://tog.acm.org/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/GCD.gif",
-			paperLink: "https://dl.acm.org/doi/10.1145/3618356",
-			codeLink: "https://github.com/aioz-ai/GCD"
-		  },
-		  {
-			year: "2023",
-			title: "Reducing Training Time in Cross-silo Federated Learning using Multigraph Topology",
-			conference: "ICCV 2023",
-			conferenceLink: "https://iccv2023.thecvf.com/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/P2P.gif",
-			paperLink: "https://arxiv.org/pdf/2207.09657",
-			codeLink: "https://github.com/aioz-ai/MultigraphFL"
-		  },
-		  {
-			year: "2023",
-			title: "Music-driven Group Choreography",
-			conference: "CVPR 2023",
-			conferenceLink: "https://cvpr2023.thecvf.com/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/GDance.gif",
-			paperLink: "https://arxiv.org/pdf/2303.12337",
-			codeLink: "https://github.com/aioz-ai/AIOZ-GDANCE"
-		  },
-		  {
-			year: "2022",
-			title: "Deep Federated Learning for Autonomous Driving",
-			conference: "IV 2022",
-			conferenceLink: "https://2022.ieee-iv.org/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/FADNet.gif",
-			paperLink: "https://arxiv.org/pdf/2110.05754",
-			codeLink: "https://github.com/aioz-ai/FADNet"
-		  },
-		  {
-			year: "2022",
-			title: "Light-weight Deformable Registration using Adversarial Learning with Distilling Knowledge",
-			conference: "IEEE TMI 2022",
-			conferenceLink: "https://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=42", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/Regis.gif",
-			paperLink: "https://arxiv.org/pdf/2110.01293",
-			codeLink: "https://github.com/aioz-ai/LDR_ALDK"
-		  },
-		  {
-			year: "2022",
-			title: "Coarse-to-fine Reasoning for Visual Question Answering",
-			conference: "CVPR 2022",
-			conferenceLink: "https://cvpr2022.thecvf.com/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/vqa1.gif",
-			paperLink: "https://arxiv.org/pdf/2110.02526",
-			codeLink: "https://github.com/aioz-ai/CFR_VQA"
-		  },
-		  {
-			year: "2021",
-			title: "Multiple Meta-model Quantifying for Medical Visual Question Answering",
-			conference: "MICCAI 2021",
-			conferenceLink: "https://miccai.org/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/MedVQA2.gif",
-			paperLink: "https://arxiv.org/pdf/2105.08913",
-			codeLink: "https://github.com/aioz-ai/MICCAI21_MMQ"
-		  },
-		  {
-			year: "2021",
-			title: "Graph-based Person Signature for Person Re-identification",
-			conference: "CVPR 2021",
-			conferenceLink: "https://cvpr2021.thecvf.com/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/ReID.gif",
-			paperLink: "https://arxiv.org/pdf/2104.06770",
-			codeLink: "https://github.com/aioz-ai/CVPRW21_GPS"
-		  },
-		  		  {
-			year: "2020",
-			title: "Deep Metric Learning Meets Deep Clustering: An Novel Unsupervised Approach for Feature Embedding",
-			conference: "BMVC 2020",
-			conferenceLink: "https://www.bmva.org/bmvc", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/DeepMetric.gif",
-			paperLink: "https://arxiv.org/pdf/2009.04091",
-			codeLink: "https://github.com/aioz-ai/BMVC20_CBSwR"
-		  },
-		  {
-			year: "2020",
-			title: "Multiple Interaction Learning with Question-type Prior Knowledge",
-			conference: "ECCV 2020",
-			conferenceLink: "https://eccv2020.eu/", 
-			mediaType: "image",
-			mediaUrl: "static/figures/MILQT.png",
-			paperLink: "https://arxiv.org/pdf/2009.11118",
-			codeLink: "https://github.com/aioz-ai/ECCVW20_MILQT"
-		  },
-		  {
-			year: "2019",
-			title: "Overcoming Data Limitation in Medical Visual Question Answering",
-			conference: "MICCAI 2019",
-			conferenceLink: "https://miccai.org/", 
-			mediaType: "image",
-			mediaUrl: "static/figures/Medical_VQA_Framework.jpg",
-			paperLink: "https://arxiv.org/pdf/2105.08913",
-			codeLink: "https://github.com/aioz-ai/MICCAI19-MedVQA"
-		  },
-		  {
-			year: "2019",
-			title: "Compact Trilinear Interaction for Visual Question Answering",
-			conference: "ICCV 2019",
-			conferenceLink: "https://iccv2019.thecvf.com/", 
-			mediaType: "gif",
-			mediaUrl: "static/figures/VQA3.gif",
-			paperLink: "https://arxiv.org/pdf/1909.11874",
-			codeLink: "https://github.com/aioz-ai/ICCV19_VQA-CTI"
-		  }
+   const papers = [
+			{
+				period: "01/2024 - 01/2026",
+				title: "AffordMatcher: Affordance Learning in 3D Scenes from Visual Signifiers",
+				description: "AffordMatcher introduces a large-scale affordance learning framework for understanding functional interactions inside complex 3D indoor scenes. The method establishes semantic correspondences between RGB observations and point cloud representations to identify affordance-aware regions guided by visual signifiers. Built upon the AffordBridge dataset containing hundreds of richly annotated scenes, the approach demonstrates strong performance in precise affordance localization and scene understanding.",
+				conference: "CVPR 2026",
+				conferenceLink: "https://cvpr.thecvf.com/",
+				mediaType: "video",
+				mediaUrl: "static/figures/AffordMatcher.mp4",
+				paperLink: "https://arxiv.org/abs/2603.27970",
+				codeLink: "https://github.com/aioz-ai/AffordMatcher"
+			},
+			{
+				period: "05/2024 - 03/2026",
+				title: "AeroScene: Progressive Scene Synthesis for Aerial Robotics",
+				description: "AeroScene introduces a progressive aerial scene synthesis and world modeling framework designed to support autonomous robotic navigation in dynamic environments. The method leverages incremental generation techniques to build high-fidelity 3D scene representations from aerial observations, enabling efficient mapping and planning for drones and robotic systems. Built upon custom aerial datasets and simulation environments, the approach demonstrates strong performance in realistic scene reconstruction and long-term navigation robustness.",
+				conference: "ICRA 2026",
+				conferenceLink: "https://2026.ieee-icra.org/",
+				mediaType: "video",
+				mediaUrl: "static/figures/AeroScene.mp4",
+				paperLink: "https://arxiv.org/abs/2603.23224",
+				codeLink: "https://github.com/aioz-ai/AeroScene"
+			},
+			{
+				period: "01/2025 - 02/2026",
+				title: "SplineFormer: An Explainable Transformer Network for Autonomous Endovascular Navigation",
+				description: "SplineFormer introduces an explainable transformer-based architecture for precise and interpretable endovascular navigation in robotic-assisted procedures. The method models the continuous, smooth shape evolution of curvilinear instruments like guidewires as splines, effectively capturing intricate bending and vessel interactions through transformer attention mechanisms. Integrated into an end-to-end robot navigation system and validated on real robotic setups, the approach achieves a high success rate (e.g., 50% in challenging cannulation tasks) while providing interpretable predictions that outperform traditional segmentation methods.",
+				conference: "IROS 2025",
+				conferenceLink: "https://www.ieee-iros.org/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/Spline.gif",
+				paperLink: "https://arxiv.org/abs/2501.04515",
+				codeLink: "#"
+			},
+			{
+				period: "07/2025 - 12/2025",
+				title: "Lightweight Temporal Transformer Decomposition for Federated Autonomous Driving",
+				description: "Lightweight Temporal Transformer Decomposition introduces an efficient temporal modeling framework for scalable federated autonomous driving systems. The method decomposes large attention maps into smaller matrices to process sequential image frames and steering data, significantly reducing model complexity while leveraging temporal information for improved robustness. Evaluated intensively on multiple datasets and real robots, the approach outperforms recent methods with real-time performance and strong generalization in challenging non-IID federated scenarios.",
+				conference: "IROS 2025",
+				conferenceLink: "https://www.ieee-iros.org/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/LTFed.gif",
+				paperLink: "https://arxiv.org/abs/2506.23523",
+				codeLink: "https://github.com/aioz-ai/LTFed"
+			},
+			{
+				period: "05/2024 - 06/2026",
+				title: "FedEFM: Federated Endovascular Foundation Model with Unseen Data",
+				description: "FedEFM introduces a federated foundation model for robust endovascular tool segmentation and intervention under privacy constraints and unseen data distributions. The method employs differentiable Earth Mover's Distance within a knowledge distillation framework to handle data heterogeneity across decentralized sites. Once trained, the model weights serve as powerful initialization for downstream tasks; extensive experiments demonstrate new state-of-the-art results in catheter/guidewire segmentation while addressing critical data-sharing limitations in medical domains.",
+				conference: "ICRA 2025",
+				conferenceLink: "https://www.ieee-icra.org/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/FedEFM.gif",
+				paperLink: "https://arxiv.org/abs/2501.16992",
+				codeLink: "https://github.com/aioz-ai/FedEFM"
+			},
+			{
+				period: "07/2023 - 06/2024",
+				title: "Guide3D: A Bi-planar X-ray Dataset for 3D Shape Reconstruction",
+				description: "Guide3D introduces a comprehensive bi-planar X-ray dataset and benchmark tailored for 3D shape reconstruction of endovascular tools in realistic clinical-like settings. The dataset comprises high-resolution, manually annotated fluoroscopic videos captured with specialized bi-planar equipment, overcoming limitations of prior monoplanar data. Accompanied by a strong baseline for guidewire shape prediction, it enables advanced segmentation and reconstruction techniques, demonstrating applicability for more accurate and efficient robotic endovascular interventions.",
+				conference: "ACCV 2024",
+				conferenceLink: "https://accv2024.org/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/Guide3D.gif",
+				paperLink: "https://arxiv.org/abs/2410.22224",
+				codeLink: "https://github.com/airvlab/guide3d"
+			},
+			{
+				period: "03/2024 - 03/2026",
+				title: "Scalable Group Choreography via Variational Phase Manifold Learning",
+				description: "Scalable Group Choreography via Variational Phase Manifold Learning introduces a phase-based variational generative model (PDVAE) for high-fidelity, resource-efficient multi-person dance synthesis. The method learns a generative manifold in the frequency domain using phase parameters, enabling consistent group motions synchronized to music while supporting an unlimited number of dancers with constant memory usage. Extensive experiments on public datasets and user studies show it outperforms state-of-the-art methods in quality and scalability for real-world applications like virtual performances.",
+				conference: "ECCV 2024",
+				conferenceLink: "https://eccv2024.ecva.net/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/Manifold.gif",
+				paperLink: "https://arxiv.org/pdf/2407.18839",
+				codeLink: "https://github.com/aioz-ai/VAE"
+			},
+			{
+				period: "07/2024 - 12/2024",
+				title: "Fine-grained Visual Classification using Self Assessment Classifier",
+				description: "Fine-grained Visual Classification using Self Assessment Classifier introduces a self-assessment driven framework that enhances robustness in distinguishing subtle category differences. The method incorporates internal confidence evaluation and iterative refinement mechanisms to better handle intra-class variations and challenging samples. Validated across standard fine-grained benchmarks, the approach demonstrates improved accuracy and reliability compared to conventional classifiers, particularly in scenarios with limited supervision or high visual similarity.",
+				conference: "CAI 2024",
+				conferenceLink: "https://www.caiconference.org/",
+				mediaType: "image",
+				mediaUrl: "static/figures/SAC.jpg",
+				paperLink: "https://arxiv.org/pdf/2205.10529",
+				codeLink: "https://github.com/aioz-ai/SAC"
+			},
+			{
+				period: "01/2024 - 12/2024",
+				title: "Reducing Non-IID Effects in Federated Autonomous Driving with Contrastive Divergence Loss",
+				description: "Reducing Non-IID Effects in Federated Autonomous Driving with Contrastive Divergence Loss introduces a novel contrastive divergence loss to mitigate data heterogeneity challenges in federated autonomous driving. The method directly addresses distribution shifts during local training at each silo by reducing the impact of divergence factors from transmitted models, enabling more robust convergence with standard aggregation. Intensive experiments across multiple datasets and network topologies demonstrate significant performance gains over state-of-the-art federated approaches in steering prediction and navigation tasks.",
+				conference: "ICRA 2024",
+				conferenceLink: "https://www.ieee-icra.org/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/CDL.gif",
+				paperLink: "https://livrepository.liverpool.ac.uk/3188799/1/2303.06305v2.pdf",
+				codeLink: "https://github.com/aioz-ai/CDL"
+			},
+			{
+				period: "10/2023 - 06/2024",
+				title: "Style Transfer for 2D Talking Head Generation",
+				description: "Style Transfer for 2D Talking Head Generation introduces a style-aware framework for expressive and controllable talking head synthesis from audio and a single image. The method extracts facial landmark motions from audio, constructs intermediate style patterns from reference frames, and employs a style-aware generator to produce photo-realistic animations. It effectively transfers personalized talking or singing styles to new characters; experiments show superior qualitative and quantitative results over recent methods in fidelity, natural motion, and style adaptation.",
+				conference: "CVPR 2024",
+				conferenceLink: "https://cvpr2024.thecvf.com/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/Talking.gif",
+				paperLink: "https://arxiv.org/pdf/2303.09799",
+				codeLink: "#"
+			},
+			{
+				period: "01/2022 - 06/2023",
+				title: "Controllable Group Choreography using Contrastive Diffusion",
+				description: "Controllable Group Choreography using Contrastive Diffusion introduces a diffusion-based generative framework with Group Contrastive Diffusion (GCD) for synchronized, music-driven group dance synthesis. The method supports flexible numbers of dancers and long-term sequences while governing consistency and diversity through classifier guidance. Extensive evaluations demonstrate its ability to produce visually captivating, coherent group animations with user-controllable levels of synchronization and variation, outperforming prior approaches in quality and customizability.",
+				conference: "ACM TOG 2023",
+				conferenceLink: "https://tog.acm.org/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/GCD.gif",
+				paperLink: "https://dl.acm.org/doi/10.1145/3618356",
+				codeLink: "https://github.com/aioz-ai/GCD"
+			},
+			{
+				period: "07/2022 - 12/2023",
+				title: "Reducing Training Time in Cross-silo Federated Learning using Multigraph Topology",
+				description: "Reducing Training Time in Cross-silo Federated Learning using Multigraph Topology introduces an efficient multigraph communication topology for faster decentralized training. The method constructs an overlay-based multigraph parsed into simple graph states with isolated nodes, allowing model aggregation without full synchronization waits. Experiments on public datasets show substantial reductions in wall-clock training time compared to state-of-the-art topologies while preserving model accuracy in cross-silo settings.",
+				conference: "ICCV 2023",
+				conferenceLink: "https://iccv2023.thecvf.com/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/P2P.gif",
+				paperLink: "https://arxiv.org/pdf/2207.09657",
+				codeLink: "https://github.com/aioz-ai/MultigraphFL"
+			},
+			{
+				period: "01/2023 - 12/2023",
+				title: "Music-driven Group Choreography",
+				description: "Music-driven Group Choreography introduces a framework for generating synchronized and expressive multi-person dance motions conditioned on music input. The method models inter-dancer interactions and temporal alignment to produce coherent group performances. Built and evaluated on dedicated group dance datasets, it achieves high-fidelity results with strong synchronization, advancing applications in animation, virtual idols, and entertainment.",
+				conference: "CVPR 2023",
+				conferenceLink: "https://cvpr2023.thecvf.com/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/GDance.gif",
+				paperLink: "https://arxiv.org/pdf/2303.12337",
+				codeLink: "https://github.com/aioz-ai/AIOZ-GDANCE"
+			},
+			{
+				period: "01/2021 - 06/2022",
+				title: "Deep Federated Learning for Autonomous Driving",
+				description: "Deep Federated Learning for Autonomous Driving introduces a collaborative federated framework for training robust perception and control models across vehicle silos without sharing raw data. The method addresses key challenges in distributed autonomous systems through efficient model sharing and aggregation. Validated on driving datasets, it demonstrates effective performance in steering and navigation tasks while preserving privacy.",
+				conference: "IV 2022",
+				conferenceLink: "https://2022.ieee-iv.org/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/FADNet.gif",
+				paperLink: "https://arxiv.org/pdf/2110.05754",
+				codeLink: "https://github.com/aioz-ai/FADNet"
+			},
+			{
+				period: "01/2021 - 12/2022",
+				title: "Light-weight Deformable Registration using Adversarial Learning with Distilling Knowledge",
+				description: "Light-weight Deformable Registration using Adversarial Learning with Distilling Knowledge introduces an efficient framework combining adversarial training and knowledge distillation for medical image registration. The method achieves accurate deformable alignments with reduced computational demands. Experiments highlight strong performance in registration accuracy and speed suitable for clinical workflows.",
+				conference: "IEEE TMI 2022",
+				conferenceLink: "https://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=42",
+				mediaType: "gif",
+				mediaUrl: "static/figures/Regis.gif",
+				paperLink: "https://arxiv.org/pdf/2110.01293",
+				codeLink: "https://github.com/aioz-ai/LDR_ALDK"
+			},
+			{
+				period: "03/2022 - 08/2022",
+				title: "Coarse-to-fine Reasoning for Visual Question Answering",
+				description: "Coarse-to-fine Reasoning for Visual Question Answering introduces a hierarchical reasoning strategy that progressively refines answers by integrating multi-level visual and linguistic cues. The method improves interpretability and accuracy in complex VQA scenarios. Extensive benchmarking shows notable gains over flat reasoning baselines.",
+				conference: "CVPR 2022",
+				conferenceLink: "https://cvpr2022.thecvf.com/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/vqa1.gif",
+				paperLink: "https://arxiv.org/pdf/2110.02526",
+				codeLink: "https://github.com/aioz-ai/CFR_VQA"
+			},
+			{
+				period: "09/2020 - 06/2021",
+				title: "Multiple Meta-model Quantifying for Medical Visual Question Answering",
+				description: "Multiple Meta-model Quantifying for Medical Visual Question Answering introduces a meta-model quantification approach for reliable and uncertainty-aware answers in medical VQA. The method ensembles diverse models to enhance robustness under limited or noisy medical data. It demonstrates improved performance and trustworthiness in clinical visual reasoning tasks.",
+				conference: "MICCAI 2021",
+				conferenceLink: "https://miccai.org/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/MedVQA2.gif",
+				paperLink: "https://arxiv.org/pdf/2105.08913",
+				codeLink: "https://github.com/aioz-ai/MICCAI21_MMQ"
+			},
+			{
+				period: "01/2020 - 12/2021",
+				title: "Graph-based Person Signature for Person Re-identification",
+				description: "Graph-based Person Signature for Person Re-identification introduces a graph-structured identity representation that captures relational features for robust re-ID across cameras. The method models appearance and structural cues effectively. Evaluations on standard benchmarks show superior matching accuracy in challenging conditions.",
+				conference: "CVPR 2021",
+				conferenceLink: "https://cvpr2021.thecvf.com/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/ReID.gif",
+				paperLink: "https://arxiv.org/pdf/2104.06770",
+				codeLink: "https://github.com/aioz-ai/CVPRW21_GPS"
+			},
+			{
+				period: "01/2019 - 06/2020",
+				title: "Deep Metric Learning Meets Deep Clustering: An Novel Unsupervised Approach for Feature Embedding",
+				description: "Deep Metric Learning Meets Deep Clustering introduces a hybrid unsupervised framework that jointly optimizes metric learning and clustering objectives for rich feature embeddings. The method discovers meaningful representations without labels. It achieves strong results on clustering and retrieval tasks across vision datasets.",
+				conference: "BMVC 2020",
+				conferenceLink: "https://www.bmva.org/bmvc",
+				mediaType: "gif",
+				mediaUrl: "static/figures/DeepMetric.gif",
+				paperLink: "https://arxiv.org/pdf/2009.04091",
+				codeLink: "https://github.com/aioz-ai/BMVC20_CBSwR"
+			},
+			{
+				period: "07/2019 - 12/2020",
+				title: "Multiple Interaction Learning with Question-type Prior Knowledge",
+				description: "Multiple Interaction Learning with Question-type Prior Knowledge introduces a question-aware framework that leverages type-specific priors for enhanced visual-linguistic fusion in VQA. The method improves reasoning by tailoring interactions to query categories. Experiments confirm better accuracy on diverse VQA benchmarks.",
+				conference: "ECCV 2020",
+				conferenceLink: "https://eccv2020.eu/",
+				mediaType: "image",
+				mediaUrl: "static/figures/MILQT.png",
+				paperLink: "https://arxiv.org/pdf/2009.11118",
+				codeLink: "https://github.com/aioz-ai/ECCVW20_MILQT"
+			},
+			{
+				period: "01/2018 - 06/2019",
+				title: "Overcoming Data Limitation in Medical Visual Question Answering",
+				description: "Overcoming Data Limitation in Medical Visual Question Answering introduces techniques to address scarcity in medical VQA through data-efficient learning and augmentation strategies. The method enhances model generalization in low-resource clinical settings. It shows improved performance on medical imaging QA tasks.",
+				conference: "MICCAI 2019",
+				conferenceLink: "https://miccai.org/",
+				mediaType: "image",
+				mediaUrl: "static/figures/Medical_VQA_Framework.jpg",
+				paperLink: "https://arxiv.org/pdf/2105.08913",
+				codeLink: "https://github.com/aioz-ai/MICCAI19-MedVQA"
+			},
+			{
+				period: "07/2018 - 12/2019",
+				title: "Compact Trilinear Interaction for Visual Question Answering",
+				description: "Compact Trilinear Interaction for Visual Question Answering introduces an efficient trilinear attention mechanism for compact yet powerful multimodal fusion in VQA. The method reduces parameters while maintaining strong cross-modal reasoning. Benchmarks demonstrate competitive or superior results with lower complexity.",
+				conference: "ICCV 2019",
+				conferenceLink: "https://iccv2019.thecvf.com/",
+				mediaType: "gif",
+				mediaUrl: "static/figures/VQA3.gif",
+				paperLink: "https://arxiv.org/pdf/1909.11874",
+				codeLink: "https://github.com/aioz-ai/ICCV19_VQA-CTI"
+			}
 		];
 
     let visibleCount = 10;
@@ -652,10 +675,16 @@
 			card.innerHTML = `
 				${mediaHTML}
 				<div class="paper-content">
-					<div class="paper-year">${paper.year}</div>
+					<div class="paper-period">${paper.period}</div>
 					<div class="paper-title">${paper.title}</div>
+					${paper.description ? `
+					<div class="paper-description">
+						${paper.description}
+					</div>
+					` : ''}
+
 					<div class="conference">
-						<a href="${paper.conferenceLink}" target="_blank">${paper.conference}</a>
+						<a href="${paper.conferenceLink}" target="_blank"> Accepted in ${paper.conference} Conference </a>
 					</div>
 					<div class="paper-links">
 						${paper.paperLink ? `<a href="${paper.paperLink}" class="paper-link" target="_blank"><span>🗐</span> View Full Paper</a>` : ''}
